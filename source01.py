@@ -20,23 +20,22 @@ class NAOObjectDetector:
         self.tts_service = None
         self.connect_to_nao()
         
-        # Load the YOLOv11 model
+        # Load the YOLOv8 model
         try:
-            print("Loading YOLOv11 model...")
+            print("Loading YOLOv8 model...")
             if model_path:
                 self.model = YOLO(model_path)
-            else:
-                # Use the latest YOLOv11 model from Ultralytics
-                self.model = YOLO("yolov8n.pt")  # Can also use yolov11s.pt, yolov11m.pt, or yolov11l.pt for better performance
-            print("YOLOv11 model loaded successfully")
+            else:                
+                self.model = YOLO("yolov8n.pt")  
+            print("YOLOv8 model loaded successfully")
         except Exception as e:
-            print(f"Error loading YOLOv11 model: {e}")
+            print(f"Error loading YOLOv8 model: {e}")
             traceback.print_exc()
             raise
         
         # Create a CV2 window for displaying results
-        cv2.namedWindow("NAO Object Detection (YOLOv11)", cv2.WINDOW_NORMAL)
-        cv2.resizeWindow("NAO Object Detection (YOLOv11)", 800, 600)
+        cv2.namedWindow("NAO Object Detection (YOLOv8)", cv2.WINDOW_NORMAL)
+        cv2.resizeWindow("NAO Object Detection (YOLOv8)", 800, 600)
     
     def connect_to_nao(self):
         """Connect to the NAO robot and initialize services"""
@@ -115,10 +114,8 @@ class NAOObjectDetector:
             self.connect_to_nao()
             return None
     
-    def detect_objects(self, image):
-        """Detect objects in the input image using YOLOv11"""
-        try:
-            # Perform object detection using YOLOv11
+    def detect_objects(self, image):        
+        try:            
             results = self.model(image, conf=0.4)  # Set confidence threshold
             
             # Process results
@@ -185,7 +182,7 @@ class NAOObjectDetector:
                 print("None")
             
             # Display the image with OpenCV
-            cv2.imshow("NAO Object Detection (YOLOv11)", output_image)
+            cv2.imshow("NAO Object Detection (YOLOv8)", output_image)
             cv2.waitKey(1)  # Update the window
             
             # Save the result image with timestamp
@@ -248,7 +245,7 @@ class NAOObjectDetector:
     def run_continuous_detection(self, interval=5):
         """Run continuous object detection with specified interval"""
         try:
-            print("Starting continuous object detection with YOLOv11. Press Ctrl+C to stop.")
+            print("Starting continuous object detection with YOLOv8. Press Ctrl+C to stop.")
             detection_count = 0
             
             while True:
@@ -265,7 +262,7 @@ class NAOObjectDetector:
                     continue
                     
                 # Perform object detection
-                print("Detecting objects using YOLOv11...")
+                print("Detecting objects using YOLOv8...")
                 results = self.detect_objects(image)
                 
                 # Display and announce results
@@ -292,9 +289,9 @@ class NAOObjectDetector:
             self.cleanup()
     
     def fine_tune_model(self, data_yaml_path, epochs=10, batch_size=16):
-        """Fine-tune the YOLOv11 model on custom dataset"""
+        """Fine-tune the YOLOv8 model on custom dataset"""
         try:
-            print(f"Fine-tuning YOLOv11 model on custom dataset: {data_yaml_path}")
+            print(f"Fine-tuning YOLOv8 model on custom dataset: {data_yaml_path}")
             
             # Set training parameters
             model_params = {
@@ -335,11 +332,11 @@ class NAOObjectDetector:
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='NAO Object Detection with YOLOv11')
+    parser = argparse.ArgumentParser(description='NAO Object Detection with YOLOv8')
     parser.add_argument('--ip', type=str, default='10.0.1.103', help='NAO robot IP address')
     parser.add_argument('--port', type=int, default=9559, help='NAO robot port')
-    parser.add_argument('--model', type=str, default=None, help='Path to custom YOLOv11 model')
-    parser.add_argument('--interval', type=float, default=5.0, help='Detection interval in seconds')
+    parser.add_argument('--model', type=str, default=None, help='Path to custom YOLOv8 model')
+    parser.add_argument('--interval', type=float, default=3.0, help='Detection interval in seconds')
     parser.add_argument('--finetune', type=str, default=None, help='Path to data.yaml for fine-tuning')
     parser.add_argument('--epochs', type=int, default=10, help='Number of epochs for fine-tuning')
     
