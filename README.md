@@ -75,6 +75,6 @@ python source01.py
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License.
 
 Feel free to contribute or open issues if you encounter any problems or have suggestions for improvements!
