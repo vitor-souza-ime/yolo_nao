@@ -37,7 +37,7 @@ Before running the script, make sure you have the following dependencies install
 
 You can run the detection script with the following command:
 
-python source01.py ip
+python source01.py
 
 ## How It Works
 
